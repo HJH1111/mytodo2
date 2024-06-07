@@ -15,11 +15,11 @@ class StopWatchAspect {
 
 
     @Around("@annotation(com.example.mytodo2.infra.aop.StopWatch)")
-    fun run(joinPoint: ProceedingJoinPoint): Any {
+    fun run(joinPoint: ProceedingJoinPoint) {
         val stopWatch = StopWatch()
 
         stopWatch.start()
-        val result = joinPoint.proceed()
+        joinPoint.proceed()
         stopWatch.stop()
 
         val timeElapsedMs = stopWatch.totalTimeMillis
@@ -28,6 +28,6 @@ class StopWatchAspect {
         val methodArguments = joinPoint.args
 
         logger.info("Method Name: $methodName | Arguments: ${methodArguments.joinToString(", ")} | Execution Time: ${timeElapsedMs}ms")
-        return result
+
     }
 }

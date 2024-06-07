@@ -4,6 +4,7 @@ import com.example.mytodo2.user.dto.UserResponse
 import jakarta.persistence.*
 
 
+
 @Entity
 @Table(name = "todo_user")
 class User(

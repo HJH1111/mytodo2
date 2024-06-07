@@ -14,7 +14,6 @@ import com.example.mytodo2.todoapp.controller.dto.UpdateTodoRequest
 import com.example.mytodo2.todoapp.model.Todo
 import com.example.mytodo2.todoapp.model.toTodoResponse
 import com.example.mytodo2.todoapp.repository.TodoRepository
-import com.example.mytodo2.user.dto.LoginRequest
 import jakarta.transaction.Transactional
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -22,7 +21,7 @@ import org.springframework.stereotype.Service
 @Service
 class TodoService(
     val todoRepository: TodoRepository,
-    val commentRepository: CommentRepository,
+    val commentRepository: CommentRepository
 ) {
     fun getTodoList(): List<TodoResponse> {
         return todoRepository.findAll().map { it.toTodoResponse() }
@@ -47,13 +46,12 @@ class TodoService(
 
     @Transactional
     fun updateTodo(todoId: Long, request: UpdateTodoRequest): TodoResponse {
-        val result = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
+        val result = todoRepository.findByIdOrNull(todoId) ?: throw Exception("Todo")
+        if (result == null) throw ModelNotFoundException("Todo", todoId)
 
         result.title = request.title
         result.content = request.content
         result.writer = request.writer
-
-
         return todoRepository.save(result).toTodoResponse()
     }
 
@@ -98,10 +96,10 @@ class TodoService(
         commentId: Long,
         request: UpdateCommentRequest,
     ): CommentResponse {
-        val commentUp = commentRepository.findByTodoIdAndId(todoId, commentId) ?: throw ModelNotFoundException("Comment", commentId)
-
-        commentUp.writerName = request.writerName
-        commentUp.commentContent = request.commentContent
+        val commentUp = commentRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Comment", commentId)
+        val (writerName, commentContent) = request
+        commentUp.writerName = writerName
+        commentUp.commentContent = commentContent
 
         return commentRepository.save(commentUp).toCommentResponse()
     }
@@ -115,10 +113,6 @@ class TodoService(
         val commentDe =
             commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment", commentId)
         commentRepository.deleteById(commentId)
-
-        todoDe.deleteComment(commentDe)
-
-        todoRepository.save(todoDe)
     }
 
 }
