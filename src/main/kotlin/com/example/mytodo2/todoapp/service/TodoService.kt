@@ -34,20 +34,22 @@ class TodoService(
     }
 
     @Transactional
-    fun createTodo(request: CreateTodoRequest): TodoResponse {
+    fun createTodo(
+        request: CreateTodoRequest
+    ): TodoResponse {
         return todoRepository.save(
             Todo(
                 title = request.title,
                 content = request.content,
-                writer = request.writer
+                writer = request.writer,
             )
         ).toTodoResponse()
+
     }
 
     @Transactional
     fun updateTodo(todoId: Long, request: UpdateTodoRequest): TodoResponse {
-        val result = todoRepository.findByIdOrNull(todoId) ?: throw Exception("Todo")
-        if (result == null) throw ModelNotFoundException("Todo", todoId)
+        val result = todoRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Todo", todoId)
 
         result.title = request.title
         result.content = request.content
@@ -97,9 +99,9 @@ class TodoService(
         request: UpdateCommentRequest,
     ): CommentResponse {
         val commentUp = commentRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Comment", commentId)
-        val (writerName, commentContent) = request
-        commentUp.writerName = writerName
-        commentUp.commentContent = commentContent
+
+        commentUp.writerName = request.writerName
+        commentUp.commentContent = request.commentContent
 
         return commentRepository.save(commentUp).toCommentResponse()
     }
@@ -113,6 +115,10 @@ class TodoService(
         val commentDe =
             commentRepository.findByIdOrNull(commentId) ?: throw ModelNotFoundException("Comment", commentId)
         commentRepository.deleteById(commentId)
+
+        todoDe.deleteComment(commentDe)
+
+        todoRepository.save(todoDe)
     }
 
 }

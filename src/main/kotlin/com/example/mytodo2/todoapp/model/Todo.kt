@@ -2,6 +2,7 @@ package com.example.mytodo2.todoapp.model
 
 import com.example.mytodo2.comment.model.Comment
 import com.example.mytodo2.todoapp.controller.dto.TodoResponse
+import com.example.mytodo2.user.model.User
 import jakarta.persistence.*
 import java.time.LocalDateTime
 
@@ -24,8 +25,9 @@ class Todo(
     @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
     var comments: MutableList<Comment> = mutableListOf(),
 
-
-
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    var user: User? = null,
     )
 {
     @Id
@@ -34,6 +36,9 @@ class Todo(
 
     fun createComment(comment: Comment) {
         comments.add(comment)
+    }
+    fun deleteComment(comment: Comment) {
+        comments.remove(comment)
     }
 }
 
