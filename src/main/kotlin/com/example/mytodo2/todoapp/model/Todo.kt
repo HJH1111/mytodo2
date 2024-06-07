@@ -22,7 +22,9 @@ class Todo(
     var date: LocalDateTime = LocalDateTime.now(),
 
     @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
-    var comments: MutableList<Comment> = mutableListOf()
+    var comments: MutableList<Comment> = mutableListOf(),
+
+
 
     )
 {
@@ -32,10 +34,6 @@ class Todo(
 
     fun createComment(comment: Comment) {
         comments.add(comment)
-    }
-
-    fun deleteComment(comment: Comment) {
-        comments.remove(comment)
     }
 }
 
