@@ -15,14 +15,6 @@ class TodoController(
     val todoService: TodoService
 ) {
 
-    @GetMapping("/search")
-    @PreAuthorize("hasRole('TUTOR') or hasRole('STUDENT')")
-    fun searchTodoList(@RequestParam(value = "title") title: String): ResponseEntity<List<TodoResponse>> {
-        return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(todoService.searchTodoList(title))
-    }
-
     @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
     @GetMapping("/todos")
     fun getTodoList(): ResponseEntity<List<TodoResponse>> {

@@ -65,10 +65,6 @@ class TodoService(
         return commentRepository.findAll().map { it.toCommentResponse() }
     }
 
-    fun searchTodoList(title: String): List<TodoResponse>? {
-        return todoRepository.searchTodoListByTitle(title).map { it.toTodoResponse() }
-    }
-
 
     fun getComment(todoId: Long, commentId: Long): CommentResponse {
         val commentGet = commentRepository.findByTodoIdAndId(todoId, commentId)
