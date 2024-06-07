@@ -14,14 +14,14 @@ class CommentController(
     val todoService: TodoService
 ) {
 
-    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
+//    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
     @GetMapping()
     fun getCommentList(
     ): ResponseEntity<List<CommentResponse>> {
         return ResponseEntity.ok(todoService.getCommentList())
     }
 
-    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
+//    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
     @GetMapping("/{commentId}")
     fun getComment(
         @PathVariable todoId: Long,

@@ -23,11 +23,7 @@ class Todo(
     var date: LocalDateTime = LocalDateTime.now(),
 
     @OneToMany(mappedBy = "todo", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
-    var comments: MutableList<Comment> = mutableListOf(),
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    var user: User? = null,
+    var comments: MutableList<Comment> = mutableListOf()
     )
 {
     @Id

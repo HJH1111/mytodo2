@@ -22,8 +22,7 @@ class User(
     @Column(name = "role", nullable = false)
     val role: UserRole,
 
-    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
-    var todos: MutableList<Todo> = mutableListOf()
+
 
 
 
@@ -31,14 +30,6 @@ class User(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
-
-    fun createTodo(todo: Todo) {
-        todos.add(todo)
-    }
-
-    fun deleteTodo(todo: Todo) {
-        todos.remove(todo)
-    }
 
 }
 fun User.toResponse(): UserResponse {

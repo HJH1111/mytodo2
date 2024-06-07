@@ -94,9 +94,8 @@ class TodoService(
         commentId: Long,
         request: UpdateCommentRequest,
     ): CommentResponse {
-        val commentUp = commentRepository.findByIdOrNull(todoId) ?: throw ModelNotFoundException("Comment", commentId)
+        val commentUp = commentRepository.findByTodoIdAndId(todoId, commentId) ?: throw ModelNotFoundException("Comment", commentId)
 
-        commentUp.writerName = request.writerName
         commentUp.commentContent = request.commentContent
 
         return commentRepository.save(commentUp).toCommentResponse()
