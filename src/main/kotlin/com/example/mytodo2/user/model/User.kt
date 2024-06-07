@@ -1,5 +1,6 @@
 package com.example.mytodo2.user.model
 
+import com.example.mytodo2.todoapp.model.Todo
 import com.example.mytodo2.user.dto.UserResponse
 import jakarta.persistence.*
 
@@ -21,11 +22,24 @@ class User(
     @Column(name = "role", nullable = false)
     val role: UserRole,
 
+    @OneToMany(mappedBy = "user", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+    var todos: MutableList<Todo> = mutableListOf()
+
+
 
 ) {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long? = null
+
+    fun createTodo(todo: Todo) {
+        todos.add(todo)
+    }
+
+    fun deleteTodo(todo: Todo) {
+        todos.remove(todo)
+    }
+
 }
 fun User.toResponse(): UserResponse {
     return UserResponse(
