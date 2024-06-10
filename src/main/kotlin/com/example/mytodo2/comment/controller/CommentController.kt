@@ -14,14 +14,14 @@ class CommentController(
     val todoService: TodoService
 ) {
 
-//    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
+//  @PreAuthorize("hasRole('ADMIN') or hasRole('GENERAL')")
     @GetMapping()
     fun getCommentList(
     ): ResponseEntity<List<CommentResponse>> {
         return ResponseEntity.ok(todoService.getCommentList())
     }
 
-//    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
+//  @PreAuthorize("hasRole('ADMIN') or hasRole('GENERAL')")
     @GetMapping("/{commentId}")
     fun getComment(
         @PathVariable todoId: Long,
@@ -30,7 +30,7 @@ class CommentController(
         return ResponseEntity.ok(todoService.getComment(todoId, commentId))
     }
 
-    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GENERAL')")
     @PostMapping()
     fun createComment(
         @PathVariable todoId: Long,
@@ -40,7 +40,7 @@ class CommentController(
         return ResponseEntity.ok(commentCr)
     }
 
-    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GENERAL')")
     @PutMapping("/{commentId}")
     fun updateComment(
         @PathVariable todoId: Long,
@@ -51,7 +51,7 @@ class CommentController(
         return ResponseEntity.ok(commentUp)
     }
 
-    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GENERAL')")
     @DeleteMapping("/{commentId}")
     fun deleteComment(
         @PathVariable todoId: Long,

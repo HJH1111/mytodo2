@@ -49,7 +49,7 @@ class UserService(
                     nickname = request.nickname
                 ),
                 role = when (request.role) {
-                    "DOMAIN" -> UserRole.DOMAIN
+                    "ADMIN" -> UserRole.ADMIN
                     "GENERAL" -> UserRole.GENERAL
                     else -> throw IllegalArgumentException("Invalid role")
                 }

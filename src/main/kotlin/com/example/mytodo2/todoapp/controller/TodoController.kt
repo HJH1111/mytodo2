@@ -14,13 +14,13 @@ class TodoController(
     val todoService: TodoService
 ) {
 
-//    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
+//  @PreAuthorize("hasRole('ADMIN') or hasRole('GENERAL')")
     @GetMapping("/todos")
     fun getTodoList(): ResponseEntity<List<TodoResponse>> {
         return ResponseEntity.ok(todoService.getTodoList())
     }
 
-//    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
+//  @PreAuthorize("hasRole('ADMIN') or hasRole('GENERAL')")
     @GetMapping("/todos/{todoId}")
     fun getTodo(
         @PathVariable("todoId")
@@ -37,7 +37,7 @@ class TodoController(
         return ResponseEntity.ok(todoService.createTodo(request))
     }
 
-    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GENERAL')")
     @PutMapping("/todos/{todoId}")
     fun updateTodo(
         @PathVariable todoId: Long,
@@ -46,7 +46,7 @@ class TodoController(
         return ResponseEntity.ok(todoService.updateTodo(todoId, updateTodoRequest))
     }
 
-    @PreAuthorize("hasRole('DOMAIN') or hasRole('GENERAL')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('GENERAL')")
     @DeleteMapping("/todos/{todoId}")
     fun deleteTodo(@PathVariable todoId: Long): ResponseEntity<Unit> {
         return ResponseEntity.ok(todoService.deleteTodo(todoId))
