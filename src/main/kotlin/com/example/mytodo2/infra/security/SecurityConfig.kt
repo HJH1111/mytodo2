@@ -34,6 +34,7 @@ class SecurityConfig(
                     "/signup",
                     "/swagger-ui/**",
                     "/v3/api-docs/**",
+                    "/todos/**"
                 ).permitAll()
                     .anyRequest().authenticated()
 
